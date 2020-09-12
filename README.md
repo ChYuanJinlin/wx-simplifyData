@@ -10,14 +10,14 @@ npm i wx-simplify-data -S
 
 ```javascript
 import simplify from 'wx-simplify-Data'
-<!-- 初始化 -->
+//初始化 
 simplify.init({
-  <!-- 需要传一个api对象过来 -->
+  // 需要传一个api对象过来 
   api:传入你的api 对象
 })
 
-<!**初始化配置之后，将会在微信对象上挂在一个叫wx.$getData()函数和wx.$am,你就可以使用这个函数来简易操作请求api接口,
- 用法:wx.$getData.call(this,wx.$am.你定义api函数名或者直接传你定义api的字符串函数名过来,{},fn)**>
+// 初始化配置之后，将会在微信对象上挂在一个叫wx.$getData()函数和wx.$am,你就可以使用这个函数来简易操作请求api接口,
+ // 用法:wx.$getData.call(this,wx.$am.你定义api函数名或者直接传你定义api的字符串函数名过来,{},fn)**>
 ```
 
 
