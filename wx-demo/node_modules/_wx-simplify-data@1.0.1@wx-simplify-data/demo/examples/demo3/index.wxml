@@ -1,0 +1,3 @@
+<view class="intro">普通数据自定义字段获取示例</view>
+
+<view class="intro" wx:for="{{list}}">{{item.title}}</view>
