@@ -1,0 +1,16 @@
+{
+  "pages":[
+    "examples/demo1/index",
+    "examples/demo2/index",
+    "examples/demo3/index"
+
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarTextStyle":"black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,3 @@
+<view class="intro">分页数据获取示例</view>
+
+<view class="intro" wx:for="{{list}}">{{item.title}}第 {{index + 1}} 条 </view>
