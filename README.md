@@ -1,5 +1,5 @@
 
-#安装
+# 安装
 `
 npm i wx-simplify-data -S
 `
