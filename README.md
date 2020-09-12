@@ -3,7 +3,7 @@
 `
 npm i wx-simplify-data -S
 `
-#使用
+# 使用
 
 在wx app.js 文件引入 
 
@@ -22,7 +22,7 @@ simplify.init({
 
 
 
-###simplify.init(optios:Object)(全局配置)
+### simplify.init(optios:Object)(全局配置)
 
 | 属性           | 类型            | 默认值 | 必填 | 说明                                                         |
 | -------------- | --------------- | ------ | ---- | ------------------------------------------------------------ |
@@ -34,7 +34,7 @@ simplify.init({
 | dataFilels     | string          | data   | 否   | 接口返回数据的字                                             |
 | toast          | object\|boolean | false  | 否   | 配置微信提示，用法和微信wx.showToast一样,为true 根据接返回的消息字段默认提示 |
 
-###wx.$getData.call(this,methodName:string,optios:Object | fn[, fn])
+### wx.$getData.call(this,methodName:string,optios:Object | fn[, fn])
 
 | 属性           | 类型             | 默认值 | 必填 | 说明                                                         |
 | -------------- | -------- | ------ | ---- | ------------------------------------------------------------ |
@@ -43,7 +43,7 @@ simplify.init({
 | <a href="#options" >optios</a> | Object\| function |  | 否 | 配置参数如下 |
 | fn | function | | 否 | setData赋值之前的回调,用作于改变接口数据里面的结构，或者增加字段，格式化时间操作 |
 
-###<a id="options">options</a>
+### <a id="options">options</a>
 
 | 属性           | 类型             | 默认值 | 必填 | 说明                                                         |
 | -------------- | ---------------- | ------ | ---- | ------------------------------------------------------------ |
