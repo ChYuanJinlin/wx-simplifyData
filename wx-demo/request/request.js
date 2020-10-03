@@ -1,5 +1,6 @@
 // 模拟api 请求的数据
 const api = {
+
   getList() {
     return new Promise((resovle, reject) => {
       const data = {
@@ -30,7 +31,8 @@ const api = {
       const data = {
         msg: '成功',
         code: 666,
-        list: [{
+        list: [
+          {
             title: '这是模拟获取的数据'
           },
           {
@@ -61,7 +63,7 @@ const api = {
       setTimeout(() => {
 
         for (let index = 0; index < obj.page * 20; index++) {
-          data.list.push({
+          data.data.push({
             title: '模拟分页数据'
           })
         }
