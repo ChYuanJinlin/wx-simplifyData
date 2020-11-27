@@ -6,21 +6,19 @@ Page({
   },
   // 普通数据赋值
   onLoad: function () {
-    wx.showLoading({
-      title: '获取数据中',
-    })
     wx.$getData.call(this, wx.$am.getList1, {
       // 你需要传给接口的数据
       apiData: {},
       // 配置statusCodeText字段
       statusCodeText: 'code',
+      showLoadingText: '获取数据中...',
       // 配置statusCode字段
       statusCode: 666,
       // 配置dataField字段
       dataField: 'list',
-      toast:{
-        title:'这是自定义提示',
-        icon:'none'
+      toast: {
+        title: '这是自定义提示',
+        icon: 'none'
       },
       // 需要赋值的字段
       setData: 'list',

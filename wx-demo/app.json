@@ -1,7 +1,7 @@
 {
   "pages":[
-    "examples/demo1/index",
     "examples/demo2/index",
+    "examples/demo1/index",
     "examples/demo3/index"
 
   ],
