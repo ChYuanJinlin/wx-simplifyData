@@ -63,6 +63,7 @@ simplify.init({
 | fail            | function\|object |        | 否   | 数据请求失败的提示回调,不传将会默认提示                      |
 | showLoadingText | string           | 加载中 | 否   | 获取数据的时候的loading状态                                  |
 | custom          | function         |        | 否   | 得到数据之后的回调，调用该函数之后只需要自己自定义           |
+| name            | string           |        | 否   | 你的api函数的第二个参数                                      |
 
 
 
@@ -72,6 +73,7 @@ simplify.init({
 
 1. 新增options.showLoadingText属性
 2. 新增options.custom属性
+3. 新增options.restName属性
 
 # 版本历史
 

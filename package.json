@@ -1,6 +1,6 @@
 {
   "name": "wx-simplify-data",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "微信小程序api数据简化操作",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "小程序",
     "微信小程序分页插件",
     "微信小程序获取数据",
-    "微信小程序简易获取数据"
+    "微信小程序简易获取数据",
+    "request"
   ],
   "repository": {
     "type": "github",
