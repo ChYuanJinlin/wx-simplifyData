@@ -75,5 +75,5 @@ simplify.init({
 
 # 版本历史
 
-[v1.0.1](./history/README-1.0.1.html)
+[v1.0.1](./history/README-1.0.1.md)
 
