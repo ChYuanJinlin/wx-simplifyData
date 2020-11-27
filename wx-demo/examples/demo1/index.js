@@ -6,14 +6,13 @@ Page({
   },
   // 普通数据赋值
   onLoad: function () {
-    wx.showLoading({
-      title: '获取数据中',
-    })
     wx.$getData.call(this, wx.$am.getList, {
       // 你需要传给接口的数据
       apiData: {},      
       // 需要赋值的字段
       setData: 'list',
+      // loading
+      showLoadingText:'获取数据中...',
       complete(res) {
         console.log('res---', res)
       },

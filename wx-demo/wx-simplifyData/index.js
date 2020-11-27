@@ -1,63 +1,128 @@
 import {
   getFunName
-} from '../utils/index'
+} from './utils/index'
 // 数据成功变量标识，默认200
-let statusCode = 200
-let msgField = 'msg'
-// 状态成功返回的字段
-let statusCodeText = 'status'
-// 获取数据字段的名称，默认data
-let dataField = 'data'
-// 是否打印信息
-let log = true
-// 获取函数名
-let _funObj = {}
-// 保存_api对象
-let _api = {}
-// 自定义提示
-let toast = false
+let statusCode = 200,
+  msgField = 'msg',
+  // 状态成功返回的字段
+  statusCodeText = 'status',
+  // 获取数据字段的名称，默认data
+  dataField = 'data',
+  // 是否打印信息
+  log = true,
+  // 获取函数名
+  _funObj = {},
+  // 保存_api对象
+  _api = {},
+  // 自定义提示
+  toast = false
+
+
 // 初始化函数
-
-
-
-
 export default (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) : (global.Qarticles = factory());
 
 })(this, function () {
 
+  // 打印日志信息
+  const _logFun = (options) => {
+    console.table({
+      'info': {
+        statusCode: options.statusCode || statusCode,
+        msgField: options.msgField || msgField,
+        statusCodeText: options.statusCodeText || statusCodeText,
+        dataField: options.dataField || dataField,
+        ...options
+      }
+    })
+  }
+
 
   const _initData = (options = {}) => {
     // 需要传一个配置对象  optios._api 必须传入其他可不传，采用默认配置
     init(options)
+    _logFun(options)
   }
 
 
-  const _$getData = function (apiMethodName, options = null, fn) {
-    _api[apiMethodName](options.apiData, options.name).then(res => {
-        if (log) {
-          console.table({
-            '接口返回打印信息': res,
-            '当前请求_api函数名': apiMethodName
-          })
+  const _$ok = function (data, fn) {
+    if (log) {
+      console.table({
+        'ok': data
+      })
+    }
 
-          console.table({
-            'wx-simplify打印信息': {
-              ...options,
-              statusCode: options.statusCode || statusCode,
-              msgField: options.msgField || msgField,
-              statusCodeText: options.statusCodeText || statusCodeText,
-              dataField: options.dataField || dataField
+    // 不是分页
+    if (!data.type) {
+      if ((data.res[data.statusCodeText] || data.res[statusCodeText]) == (data.statusCode || statusCode)) {
+        if (fn) {
+          fn && fn.call(this, data.res)
+        } else {
+          data.setData && this.setData && this.setData(data.setData)
+          //自定义
+          publicTips.call(this, data, 'completeTip')
+        }
+
+      } else {
+        publicTips.call(this, data, 'failTip')
+      }
+
+    }
+    // 分页执行
+    if (data.type) {
+      if (((data.res[data.statusCodeText] || data.res[statusCodeText]) || data.res[statusCodeText]) == (data.statusCode || statusCode)) {
+        // 成功
+        fn && fn.call(this, data.res)
+        // page = 1的时候执行
+        if (this.data.pages.page == 1) {
+          data.setData && this.setData && this.setData(data.setData)
+        } else {
+          if (data.loadMore) {
+            data.loadMore.call(this, data.res)
+          } else {
+            // page大于1时候执行
+            if (data.res[data.dataField || dataField].length) {
+              //完成
+              publicTips.call(this, data, 'complete')
+              this.setData && this.setData({
+                [options.setData || 'data']: [...this.data[data.setData || 'data'], ...data.res[data.dataField || dataField]]
+              })
+            } else {
+              // 没有数据
+              publicTips.call(this, data, 'noData')
             }
-          })
+          }
+        }
+      } else {
+        // 失败
+        publicTips.call(this, data, 'fail')
+      }
+    }
+    wx.hideLoading()
+  }
 
+
+
+  const _$getData = function (apiMethodName, options = null, fn) {
+    options.showLoadingText && wx.showLoading({
+      title: options.showLoadingText,
+      mask: true
+    })
+    _api[apiMethodName](options.apiData, options.name).then(res => {
+
+        if (log) {
+          _logFun({
+            ...options,
+            res,
+            apiMethodName
+          })
         }
         // 需要其他操作
         fn && fn(res)
-        // 如果传的是函数，就自定义
-        if (typeof options != 'object') {
-          options && options.call(this, res)
+        // 如果传的是custom，就自定义
+        if (options.custom) {
+          options.custom.call(this, res)
         } else {
           // 如果是分页
           if (options.type) {
@@ -66,18 +131,15 @@ export default (function (global, factory) {
               options.setData(res)
             } else {
               // 需要分页
-              wx.$ok.call(this, {
+              _$ok.call(this, {
                 ...options,
                 // 是否需要分页 true 需要 false 不需要
                 type: options.type,
                 setData: {
-                  [options.setData]: res[options.dataField || dataField]
+                  [options.setData || 'data']: res[options.dataField || dataField]
                 },
                 dataField: options.dataField,
                 res,
-                pageData: {
-                  [options.setData]: [...this.data[options.setData], ...res[options.dataField || dataField]]
-                }
               }, options.success)
 
             }
@@ -87,10 +149,10 @@ export default (function (global, factory) {
             if (options.setData == 'function') {
               options.setData(res)
             } else {
-              wx.$ok.call(this, {
+              _$ok.call(this, {
                 ...options,
                 setData: {
-                  [options.setData]: res[options.dataField || dataField]
+                  [options.setData || 'data']: res[options.dataField || dataField]
                 },
                 res,
               }, options.success)
@@ -103,68 +165,14 @@ export default (function (global, factory) {
       })
       .catch(err => {
         console.log('err--', err)
+        wx.hideLoading()
         wx.showToast({
           title: err[msgField],
           icon: 'none',
           duration: 2000
-
         })
       })
 
-  }
-  const $ok = function (data, fn) {
-    if (log) {
-      console.table({
-        '日志信息': data
-      })
-    }
-    // 不是分页
-    if (!data.type) {
-      if ((data.res[data.statusCodeText] || data.res[statusCodeText]) == (data.statusCode || statusCode)) {
-        if (fn) {
-          fn && fn.call(this, data.res)
-          return
-        }
-        data.setData && this.setData(data.setData)
-        //自定义
-        publicTips.call(this, data, 'complete')
-      } else {
-        publicTips.call(this, data, 'fail')
-      }
-
-    }
-    // 分页执行
-    if (data.type) {
-      if (((data.res[data.statusCodeText] || data.res[statusCodeText]) || data.res[statusCodeText]) == (data.statusCode || statusCode)) {
-        // 成功
-        if (fn) {
-          fn && fn.call(this, data.res)
-          return
-        }
-        // page = 1的时候执行
-        if (this.data.pages.page == 1) {
-          data.setData && this.setData(data.setData)
-        } else {
-
-          // page大于1时候执行
-          if (data.res[data.dataField || dataField].length) {
-            //完成
-            publicTips.call(this, data, 'complete')
-            data.pageData && this.setData(data.pageData)
-          } else {
-            // 没有数据
-            publicTips.call(this, data, 'noData')
-
-          }
-
-        }
-
-      } else {
-        // 失败
-        publicTips.call(this, data, 'fail')
-      }
-    }
-    wx.hideLoading()
   }
 
   function publicTips(data, name) {
@@ -211,7 +219,7 @@ export default (function (global, factory) {
     msgField = options.msgField || 'msg'
     toast = options.toast || false
     if (typeof options.api != 'object') {
-      throw new Error('错误,参数_api必须传入,并且是一个对象类型!')
+      throw new Error('错误,options.api需要传一个Object类型')
     }
     for (const key in options.api) {
       const fnName = getFunName(options.api[key])
@@ -222,12 +230,8 @@ export default (function (global, factory) {
     // 把_api对象方法 挂载到wx 上，到时候可以wx.$am.你定义_api函数名
     wx.$am = _funObj
     wx.$getData = _$getData
-    wx.$ok = $ok
+    wx.$ok = _$ok
   }
-
-
-
-
 
   return {
     init(opt) {
