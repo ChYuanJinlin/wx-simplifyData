@@ -1,6 +1,6 @@
 {
   "name": "wx-simplify-data",
-  "version": "1.0.2",
+  "version": "1.0.21",
   "description": "微信小程序api数据简化操作",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,6 @@
     "url": "https://github.com/ChYuanJinlin/wx-simplifyData"
   },
   "author": " yuanjinlin<10753600356@qq.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {}
 }

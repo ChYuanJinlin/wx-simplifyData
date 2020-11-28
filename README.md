@@ -59,6 +59,7 @@ simplify.init({
 | success         | function         |        | 否   | 成功自定义回调                                               |
 | toast           | object\|boolean  |        | 否   | 配置微信提示，如果传true默认采用,用法和微信wx.showToast一样，不穿不会显示，全局配置了，将会采用全局配置 |
 | complete        | function\|object |        | 否   | 数据请求完成的提示回调,不传将会默认提示                      |
+| loadMore        | function         |        | 否   | 当上拉加载更多赋值不满足时，需要使用这个函数来自定义上拉加载更多 |
 | noData          | function\|object |        | 否   | 当是分页接口时候,加载更多之后没有数据的时候提示回调,如果传对象和wx.showToast 用法一样 |
 | fail            | function\|object |        | 否   | 数据请求失败的提示回调,不传将会默认提示                      |
 | showLoadingText | string           | 加载中 | 否   | 获取数据的时候的loading状态                                  |
@@ -73,7 +74,7 @@ simplify.init({
 
 1. 新增options.showLoadingText属性
 2. 新增options.custom属性
-3. 新增options.restName属性
+3. 新增options.loadMore属性
 4. 新增options.name属性
 
 # 版本历史
