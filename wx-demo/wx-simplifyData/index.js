@@ -61,8 +61,8 @@ export default (function (global, factory) {
         } else {
           data.setData && this.setData && this.setData(data.setData)
           //自定义
-          publicTips.call(this, data, 'completeTip')
         }
+        publicTips.call(this, data, 'completeTip')
 
       } else {
         publicTips.call(this, data, 'failTip')
@@ -106,7 +106,7 @@ export default (function (global, factory) {
 
   const _$getData = function (apiMethodName, options = null, fn) {
     options.showLoadingText && wx.showLoading({
-      title: options.showLoadingText,
+      title: options.showLoadingText || '加载中...',
       mask: true
     })
     _api[apiMethodName](options.apiData, options.name).then(res => {
@@ -176,7 +176,6 @@ export default (function (global, factory) {
   }
 
   function publicTips(data, name) {
-
     if (typeof data[name] == 'function') {
       data[name].call(this, data.res)
       return
