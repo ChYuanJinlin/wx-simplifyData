@@ -85,11 +85,17 @@ export default (function (global, factory) {
             if (data.res[data.dataField || dataField].length) {
               //完成
               publicTips.call(this, data, 'complete')
-              this.setData && this.setData({
-                [options.setData || 'data']: [...this.data[data.setData || 'data'], ...data.res[data.dataField || dataField]]
-              })
+              data.pageData && this.setData(data.pageData)
             } else {
               // 没有数据
+              if (!data.noData) {
+                wx.showToast({
+                  title: '没有更多数据了',
+                  icon: 'none',
+                  duration: 2000
+                })
+                return 
+              }
               publicTips.call(this, data, 'noData')
             }
           }
@@ -137,6 +143,9 @@ export default (function (global, factory) {
                 type: options.type,
                 setData: {
                   [options.setData || 'data']: res[options.dataField || dataField]
+                },
+                pageData: {
+                  [options.setData || 'data']: [...this.data[options.setData], ...res.data]
                 },
                 dataField: options.dataField,
                 res,
