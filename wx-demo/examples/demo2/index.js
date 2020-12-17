@@ -8,13 +8,24 @@ Page({
     }
   },
   getPageList() {
+<<<<<<< HEAD
+=======
+
+    wx.showLoading({
+      title: '获取分页数据中',
+    })
+   
+>>>>>>> d69962e29e0a7f9b760a1320ccbccc1cc014b5d1
     wx.$getData.call(this, wx.$am.getPageList, {
       // 你需要传给接口的数据    
       // 需要赋值的字段
       apiData: {
         ...this.data.pages
       },
+<<<<<<< HEAD
       showLoadingText:'获取分页数据中...',
+=======
+>>>>>>> d69962e29e0a7f9b760a1320ccbccc1cc014b5d1
       setData: 'list',
       type: true,
       complete(res) {

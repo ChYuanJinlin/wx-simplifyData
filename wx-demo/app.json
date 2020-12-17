@@ -1,7 +1,12 @@
 {
   "pages":[
+<<<<<<< HEAD
     "examples/demo2/index",
     "examples/demo1/index",
+=======
+    "examples/demo1/index",
+    "examples/demo2/index",
+>>>>>>> d69962e29e0a7f9b760a1320ccbccc1cc014b5d1
     "examples/demo3/index"
 
   ],
