@@ -1,0 +1,24 @@
+{
+  "name": "wx-simplify-data",
+  "version": "1.0.3",
+  "description": "微信小程序api数据简化操作",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "微信小程序",
+    "小程序",
+    "微信小程序分页插件",
+    "微信小程序获取数据",
+    "微信小程序简易获取数据",
+    "request"
+  ],
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/ChYuanJinlin/wx-simplifyData"
+  },
+  "author": " yuanjinlin<10753600356@qq.com>",
+  "license": "ISC",
+  "dependencies": {}
+}
