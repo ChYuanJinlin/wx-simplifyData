@@ -56,12 +56,20 @@ export default (function (global, factory) {
     // 不是分页
     if (!data.type) {
       if ((data.res[data.statusCodeText] || data.res[statusCodeText]) == (data.statusCode || statusCode)) {
-        if (fn) {
-          fn && fn.call(this, data.res)
-        } else {
-          data.setData && this.setData && this.setData(data.setData)
-          //自定义
-        }
+        // if (fn) {
+        //   fn && fn.call(this, data.res)
+        // } else {
+        //   data.setData && this.setData && this.setData(data.setData)
+        //   //自定义
+        // }
+
+
+        data.setData && this.setData && this.setData(data.setData)
+        // 成功回调
+        fn && fn.call(this, data.res)
+
+        //自定义
+
         publicTips.call(this, data, 'completeTip')
 
       } else {
@@ -72,20 +80,27 @@ export default (function (global, factory) {
     // 分页执行
     if (data.type) {
       if (((data.res[data.statusCodeText] || data.res[statusCodeText]) || data.res[statusCodeText]) == (data.statusCode || statusCode)) {
-        // 成功
-        fn && fn.call(this, data.res)
         // page = 1的时候执行
         if (this.data.pages.page == 1) {
           data.setData && this.setData && this.setData(data.setData)
+          // 成功
+          fn && fn.call(this, data.res)
         } else {
           if (data.loadMore) {
             data.loadMore.call(this, data.res)
           } else {
             // page大于1时候执行
             if (data.res[data.dataField || dataField].length) {
-              //完成
-              publicTips.call(this, data, 'complete')
-              data.pageData && this.setData(data.pageData)
+              try {
+                //完成
+                publicTips.call(this, data, 'complete')
+                this.setData({
+                  [data.setData]: [...this.data[data.setData], ...data.res]
+                })
+              } catch (error) {
+                console.error('请使用loadMore方法加载更多数据!')
+              }
+
             } else {
               // 没有数据
               if (!data.noData) {
@@ -94,7 +109,7 @@ export default (function (global, factory) {
                   icon: 'none',
                   duration: 2000
                 })
-                return 
+                return
               }
               publicTips.call(this, data, 'noData')
             }
@@ -105,83 +120,86 @@ export default (function (global, factory) {
         publicTips.call(this, data, 'fail')
       }
     }
-    wx.hideLoading()
+    setTimeout(() => {
+      wx.hideLoading()
+    }, 500);
+
   }
 
 
 
   const _$getData = function (apiMethodName, options = null, fn) {
-    options.showLoadingText && wx.showLoading({
-      title: options.showLoadingText || '加载中...',
-      mask: true
-    })
-    _api[apiMethodName](options.apiData, options.name).then(res => {
-
-        if (log) {
-          _logFun({
-            ...options,
-            res,
-            apiMethodName
-          })
-        }
-        // 需要其他操作
-        fn && fn(res)
-        // 如果传的是custom，就自定义
-        if (options.custom) {
-          options.custom.call(this, res)
-        } else {
-          // 如果是分页
-          if (options.type) {
-
-            if (options.setData == 'function') {
-              options.setData(res)
-            } else {
-              // 需要分页
-              _$ok.call(this, {
-                ...options,
-                // 是否需要分页 true 需要 false 不需要
-                type: options.type,
-                setData: {
-                  [options.setData || 'data']: res[options.dataField || dataField]
-                },
-                pageData: {
-                  [options.setData || 'data']: [...this.data[options.setData], ...res.data]
-                },
-                dataField: options.dataField,
-                res,
-              }, options.success)
-
-            }
-
-
-          } else {
-            if (options.setData == 'function') {
-              options.setData(res)
-            } else {
-              _$ok.call(this, {
-                ...options,
-                setData: {
-                  [options.setData || 'data']: res[options.dataField || dataField]
-                },
-                res,
-              }, options.success)
-            }
-
-
+    return new Promise((resovle, reject) => {
+      options.showLoadingText && wx.showLoading({
+        title: options.showLoadingText || '加载中...',
+        mask: true
+      })
+      _api[apiMethodName](options.apiData, options.name).then(res => {
+          resovle(res)
+          if (log) {
+            _logFun({
+              ...options,
+              res,
+              apiMethodName
+            })
           }
-        }
+          // 需要其他操作
+          fn && fn(res)
+          // 如果传的是custom，就自定义
+          if (options.custom) {
+            options.custom.call(this, res)
+          } else {
+            // 如果是分页
+            if (options.type) {
 
-      })
-      .catch(err => {
-        console.log('err--', err)
-        wx.hideLoading()
-        wx.showToast({
-          title: err[msgField],
-          icon: 'none',
-          duration: 2000
+              if (options.setData == 'function') {
+                options.setData(res)
+              } else {
+                // 需要分页
+                _$ok.call(this, {
+                  ...options,
+                  // 是否需要分页 true 需要 false 不需要
+                  type: options.type,
+                  setData: {
+                    [options.setData || 'data']: res[options.dataField || dataField]
+                  },
+
+                  dataField: options.dataField,
+                  res,
+                }, options.success)
+
+              }
+
+
+            } else {
+              if (options.setData == 'function') {
+                options.setData(res)
+              } else {
+                _$ok.call(this, {
+                  ...options,
+                  setData: {
+                    [options.setData || 'data']: res[options.dataField || dataField]
+                  },
+                  res,
+                }, options.success)
+              }
+
+
+            }
+          }
+
         })
-      })
-
+        .catch(err => {
+          reject(err)
+          console.log('err--', err)
+          wx.hideLoading()
+          wx.showToast({
+            title: err[msgField],
+            icon: 'none',
+            duration: 2000
+          })
+        })
+    })
   }
 
   function publicTips(data, name) {
