@@ -36,7 +36,7 @@ simplify.init({
 | dataFilels     | string          | data   | 否   | 接口返回数据的字                                             |
 | toast          | object\|boolean | false  | 否   | 配置微信提示，用法和微信wx.showToast一样,为true 根据接返回的消息字段默认提示 |
 
-### wx.$getData.call(this,methodName:string,optios:Object | fn[, fn])
+### wx.$getData.call(this,methodName:string,optios:Object [, fn])
 
 | 属性           | 类型             | 默认值 | 必填 | 说明                                                         |
 | -------------- | -------- | ------ | ---- | ------------------------------------------------------------ |
