@@ -22,10 +22,14 @@
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
 <<<<<<< HEAD
+<<<<<<< HEAD
     "useMultiFrameRuntime": false,
 =======
     "useMultiFrameRuntime": true,
 >>>>>>> d69962e29e0a7f9b760a1320ccbccc1cc014b5d1
+=======
+    "useMultiFrameRuntime": false,
+>>>>>>> a44c52728696ab5ff3c94cc2c09c01a1de96d27a
     "useApiHook": true,
     "babelSetting": {
       "ignore": [],
@@ -38,6 +42,9 @@
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a44c52728696ab5ff3c94cc2c09c01a1de96d27a
     "packNpmRelationList": [],
     "minifyWXSS": true
   },
@@ -45,6 +52,7 @@
   "libVersion": "2.12.2",
   "appid": "wxc6714241d196ccbe",
   "projectname": "demo",
+<<<<<<< HEAD
 =======
     "packNpmRelationList": []
   },
@@ -53,6 +61,8 @@
   "appid": "wxfa2122ff7d909bdc",
   "projectname": "wx-demo",
 >>>>>>> d69962e29e0a7f9b760a1320ccbccc1cc014b5d1
+=======
+>>>>>>> a44c52728696ab5ff3c94cc2c09c01a1de96d27a
   "debugOptions": {
     "hidedInDevtools": []
   },
@@ -62,6 +72,7 @@
   "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
+<<<<<<< HEAD
 <<<<<<< HEAD
       "list": []
     },
@@ -101,6 +112,23 @@
     "miniprogram": {
       "current": -1,
 >>>>>>> d69962e29e0a7f9b760a1320ccbccc1cc014b5d1
+=======
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "plugin": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+>>>>>>> a44c52728696ab5ff3c94cc2c09c01a1de96d27a
       "list": []
     }
   }
