@@ -64,7 +64,9 @@ export default (function (global, factory) {
         // }
 
 
-        data.setData && this.setData && this.setData(data.setData)
+        data.setData && this.setData && this.setData({
+          [data.setData]: data.res.data
+        })
         // 成功回调
         fn && fn.call(this, data.res)
 
@@ -82,7 +84,9 @@ export default (function (global, factory) {
       if (((data.res[data.statusCodeText] || data.res[statusCodeText]) || data.res[statusCodeText]) == (data.statusCode || statusCode)) {
         // page = 1的时候执行
         if (this.data.pages.page == 1) {
-          data.setData && this.setData && this.setData(data.setData)
+          data.setData && this.setData && this.setData({
+            [data.setData]: data.res.data
+          })
           // 成功
           fn && fn.call(this, data.res)
         } else {
@@ -95,9 +99,10 @@ export default (function (global, factory) {
                 //完成
                 publicTips.call(this, data, 'complete')
                 this.setData({
-                  [data.setData]: [...this.data[data.setData], ...data.res]
+                  [data.setData]: [...this.data[data.setData], ...data.res[data.dataField || dataField]]
                 })
               } catch (error) {
+                console.log('errr', error)
                 console.error('请使用loadMore方法加载更多数据!')
               }
 
@@ -160,11 +165,9 @@ export default (function (global, factory) {
                   ...options,
                   // 是否需要分页 true 需要 false 不需要
                   type: options.type,
-                  setData: {
-                    [options.setData || 'data']: res[options.dataField || dataField]
-                  },
+                  setData: options.setData,
 
-                  dataField: options.dataField,
+                  dataField: options.dataField || dataField,
                   res,
                 }, options.success)
 
@@ -177,9 +180,7 @@ export default (function (global, factory) {
               } else {
                 _$ok.call(this, {
                   ...options,
-                  setData: {
-                    [options.setData || 'data']: res[options.dataField || dataField]
-                  },
+                  setData: options.setData,
                   res,
                 }, options.success)
               }
