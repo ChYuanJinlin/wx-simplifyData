@@ -25,7 +25,8 @@ const api = {
     })
   },
 
-  getList1() {
+  getList1(obj) {
+    console.log('obj--',obj);
     return new Promise((resolve, reject) => {
       const data = {
         msg: '成功',

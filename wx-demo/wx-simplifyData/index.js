@@ -21,6 +21,7 @@ let toast = false
 
 
 
+
 export default (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) : (global.Qarticles = factory());
@@ -35,82 +36,84 @@ export default (function (global, factory) {
 
 
   const _$getData = function (apiMethodName, options = null, fn) {
-    _api[apiMethodName](options.apiData, options.name).then(res => {
-        if (log) {
-          console.table({
-            '接口返回打印信息': res,
-            '当前请求_api函数名': apiMethodName
-          })
 
-          console.table({
-            'wx-simplify打印信息': {
-              ...options,
-              statusCode: options.statusCode || statusCode,
-              msgField: options.msgField || msgField,
-              statusCodeText: options.statusCodeText || statusCodeText,
-              dataField: options.dataField || dataField
-            }
-          })
+    setTimeout(() => {
+      const currentPage = getCurrentPages()[getCurrentPages().length - 1]
 
-        }
-        // 需要其他操作
-        fn && fn(res)
-        // 如果传的是函数，就自定义
-        if (typeof options != 'object') {
-          options && options.call(this, res)
-        } else {
-          // 如果是分页
-          if (options.type) {
+      _api[apiMethodName](options.params).then(res => {
+          if (log) {
+            console.table({
+              '接口返回打印信息': res,
+              '当前请求函数名': apiMethodName
+            })
 
-            if (options.setData == 'function') {
-              options.setData(res)
-            } else {
-              // 需要分页
-              wx.$ok.call(this, {
+            console.table({
+              'wx-simplify打印信息': {
                 ...options,
-                // 是否需要分页 true 需要 false 不需要
-                type: options.type,
-                setData: {
-                  [options.setData]: res[options.dataField || dataField]
-                },
-                dataField: options.dataField,
-                res,
-                pageData: {
-                  [options.setData]: [...this.data[options.setData], ...res[options.dataField || dataField]]
-                }
-              }, options.success)
-
-            }
-
-
-          } else {
-            if (options.setData == 'function') {
-              options.setData(res)
-            } else {
-              wx.$ok.call(this, {
-                ...options,
-                setData: {
-                  [options.setData]: res[options.dataField || dataField]
-                },
-                res,
-              }, options.success)
-            }
-
+                statusCode: options.statusCode || statusCode,
+                msgField: options.msgField || msgField,
+                statusCodeText: options.statusCodeText || statusCodeText,
+                dataField: options.dataField || dataField
+              }
+            })
 
           }
-        }
+          // 需要其他操作
+          fn && fn(res)
+          // 如果传的是函数，就自定义
+          if (typeof options != 'object') {
+            options && options.call(currentPage, res)
+          } else {
+            // 如果是分页
+            if (options.isPage) {
 
-      })
-      .catch(err => {
-        console.log('err--', err)
-        wx.showToast({
-          title: err[msgField],
-          icon: 'none',
-          duration: 2000
+              if (options.setData == 'function') {
+                options.setData(res)
+              } else {
+                // 需要分页
+                wx.$ok.call(currentPage, {
+                  ...options,
+                  // 是否需要分页 true 需要 false 不需要
+                  setData: {
+                    [options.setData]: res[options.dataField || dataField]
+                  },
+                  res,
+                  pageData: {
+                    [options.setData]: [...currentPage.data[options.setData], ...res[options.dataField || dataField]]
+                  }
+                }, options.success)
+
+              }
+
+
+            } else {
+              if (options.setData == 'function') {
+                options.setData(res)
+              } else {
+                wx.$ok.call(currentPage, {
+                  ...options,
+                  setData: {
+                    [options.setData]: res[options.dataField || dataField]
+                  },
+                  res,
+                }, options.success)
+              }
+
+
+            }
+          }
 
         })
-      })
+        .catch(err => {
+          console.log('err--', err)
+          wx.showToast({
+            title: err[msgField],
+            icon: 'none',
+            duration: 2000
 
+          })
+        })
+    }, 0);
   }
   const $ok = function (data, fn) {
     if (log) {
@@ -119,7 +122,7 @@ export default (function (global, factory) {
       })
     }
     // 不是分页
-    if (!data.type) {
+    if (!data.isPage) {
       if ((data.res[data.statusCodeText] || data.res[statusCodeText]) == (data.statusCode || statusCode)) {
         if (fn) {
           fn && fn.call(this, data.res)
@@ -134,22 +137,20 @@ export default (function (global, factory) {
 
     }
     // 分页执行
-    if (data.type) {
+    if (data.isPage) {
       if (((data.res[data.statusCodeText] || data.res[statusCodeText]) || data.res[statusCodeText]) == (data.statusCode || statusCode)) {
         // 成功
         if (fn) {
-          fn && fn.call(this, data.res)
+          fn && fn.call(currentPage, data.res)
           return
         }
         // page = 1的时候执行
-        if (this.data.pages.page == 1) {
+        if (this.data.pages[data.pageAttr || 'page'] == 1) {
           data.setData && this.setData(data.setData)
         } else {
 
           // page大于1时候执行
-          if (data.res[data.dataField || dataField].length) {
-            //完成
-            publicTips.call(this, data, 'complete')
+          if (data.res[data.dataField || dataField].length && this.data.pages[data.pageAttr || 'page'] > 1) {
             data.pageData && this.setData(data.pageData)
           } else {
             // 没有数据
@@ -158,7 +159,8 @@ export default (function (global, factory) {
           }
 
         }
-
+        //完成
+        publicTips.call(this, data, 'complete')
       } else {
         // 失败
         publicTips.call(this, data, 'fail')
@@ -204,12 +206,12 @@ export default (function (global, factory) {
 
   // 配置初始化参数
   const init = function (options) {
-    statusCode = options.statusCode || 200
-    dataField = options.dataField || 'data'
-    statusCodeText = options.statusCodeText || 'status'
-    log = options.log || true
-    msgField = options.msgField || 'msg'
-    toast = options.toast || false
+    options.statusCode && (statusCode = options.statusCode)
+    options.dataField && (dataField = options.dataField)
+    statusCodeText = options.statusCodeText 
+    options.log && (log = options.log)
+    msgField && (msgField = options.msgField)
+    toast && (toast = options.toast)
     if (typeof options.api != 'object') {
       throw new Error('错误,参数_api必须传入,并且是一个对象类型!')
     }

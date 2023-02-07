@@ -1,135 +1,29 @@
 {
-  "description": "项目配置文件",
+  "appid": "wxf1141a811da4fc9b",
+  "compileType": "miniprogram",
+  "libVersion": "2.30.0",
   "packOptions": {
-    "ignore": []
+    "ignore": [],
+    "include": []
   },
   "setting": {
-    "urlCheck": true,
-    "es6": true,
-    "enhance": false,
-    "postcss": true,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": false,
     "coverView": true,
-    "nodeModules": true,
-    "autoAudits": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "enhance": true,
     "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "useMultiFrameRuntime": false,
-=======
-    "useMultiFrameRuntime": true,
->>>>>>> d69962e29e0a7f9b760a1320ccbccc1cc014b5d1
-=======
-    "useMultiFrameRuntime": false,
->>>>>>> a44c52728696ab5ff3c94cc2c09c01a1de96d27a
-    "useApiHook": true,
+    "packNpmRelationList": [],
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
-    "useIsolateContext": true,
-    "useCompilerModule": true,
-    "userConfirmedUseCompilerModuleSwitch": false,
-    "packNpmManually": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a44c52728696ab5ff3c94cc2c09c01a1de96d27a
-    "packNpmRelationList": [],
-    "minifyWXSS": true
+    "condition": false
   },
-  "compileType": "miniprogram",
-  "libVersion": "2.12.2",
-  "appid": "wxc6714241d196ccbe",
-  "projectname": "demo",
-<<<<<<< HEAD
-=======
-    "packNpmRelationList": []
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.12.2",
-  "appid": "wxfa2122ff7d909bdc",
-  "projectname": "wx-demo",
->>>>>>> d69962e29e0a7f9b760a1320ccbccc1cc014b5d1
-=======
->>>>>>> a44c52728696ab5ff3c94cc2c09c01a1de96d27a
-  "debugOptions": {
-    "hidedInDevtools": []
-  },
-  "scripts": {},
-  "isGameTourist": false,
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "condition": {
-    "search": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "plugin": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-=======
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "current": -1,
-      "list": []
-    },
-    "plugin": {
-      "current": -1,
-      "list": []
-    },
-    "gamePlugin": {
-      "current": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": -1,
->>>>>>> d69962e29e0a7f9b760a1320ccbccc1cc014b5d1
-=======
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "plugin": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
->>>>>>> a44c52728696ab5ff3c94cc2c09c01a1de96d27a
-      "list": []
-    }
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
   }
 }
