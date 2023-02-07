@@ -1,6 +1,6 @@
 {
   "name": "wx-simplify-data",
-  "version": "1.0.5",
+  "version": "1.0.23",
   "description": "微信小程序api数据简化操作",
   "main": "index.js",
   "scripts": {

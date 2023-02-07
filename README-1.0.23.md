@@ -69,7 +69,7 @@ simplify.init({
 
 # 版本更新
 
-####  **v1.0.5**
+####  **v1.0.23**
 
 1. apiData修改为params
 2. type修改为isPage
